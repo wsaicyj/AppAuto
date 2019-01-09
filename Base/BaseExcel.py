@@ -63,7 +63,7 @@ class OperateReport:
 
         _write_center(worksheet, "E3", "脚本语言", self.wd)
 
-        worksheet.merge_range('E4:E6', 'appium1.8 + python3', get_format_center(self.wd))
+        worksheet.merge_range('E4:E6', 'appium1.10 + python3', get_format_center(self.wd))
         _write_center(worksheet, "A8", '机型', self.wd)
         _write_center(worksheet, "B8", '通过', self.wd)
         _write_center(worksheet, "C8", '失败', self.wd)
@@ -106,9 +106,9 @@ class OperateReport:
                                                                     'font_color': '#ffffff'}))
         _write_center(worksheet, "A2", '机型', self.wd)
         _write_center(worksheet, "B2", '用例ID', self.wd)
-        _write_center(worksheet, "C2", '用例介绍', self.wd)
+        _write_center(worksheet, "C2", '用例标题', self.wd)
         _write_center(worksheet, "D2", '用例函数', self.wd)
-        _write_center(worksheet, "E2", '前置条件', self.wd)
+        _write_center(worksheet, "E2", '用例介绍', self.wd)
         _write_center(worksheet, "F2", '操作步骤 ', self.wd)
         _write_center(worksheet, "G2", '检查点 ', self.wd)
         _write_center(worksheet, "H2", '测试结果 ', self.wd)
@@ -176,7 +176,7 @@ def pie(workbook, worksheet):
     })
     chart1.set_title({'name': '测试统计'})
     chart1.set_style(10)
-    worksheet.insert_chart('A9', chart1, {'x_offset': 25, 'y_offset': 10})
+    worksheet.insert_chart('D8', chart1, {'x_offset': 25, 'y_offset': 10})
 
 
 if __name__ == '__main__':

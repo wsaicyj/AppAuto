@@ -11,7 +11,6 @@ from appium.webdriver.common.touch_action import TouchAction
 '''
 # 此脚本主要用于查找元素是否存在，操作页面元素
 '''
-
 class OperateElement:
     def __init__(self, driver=""):
         self.driver = driver
@@ -26,22 +25,22 @@ class OperateElement:
         try:
             if type(mOperate) == list:  # 多检查点
                 for item in mOperate:
-                    # if item.get("is_webview", "0") == 1:  # 1表示切换到webview
-                    #     self.switchToWebview()
-                    # elif item.get("is_webview", "0") == 2:
-                    #     self.switchToNative()
+                    if item.get("is_webview", "0") == 1:  # 1表示切换到webview
+                        self.switchToWebview()
+                    elif item.get("is_webview", "0") == 2:
+                        self.switchToNative()
                     if item.get("element_info", "0") == "0":   # 如果没有页面元素，就不检测是页面元素，可能是滑动等操作
                         return {"result": True}
                     t = item["check_time"] if item.get("check_time", "0") != "0" else be.WAIT_TIME
                     WebDriverWait(self.driver, t).until(lambda x: self.elements_by(item))
                 return {"result": True}
             if type(mOperate) == dict:  # 单检查点
-                # if mOperate.get("is_webview", "0") == 1 and self.switchToWebview() is False:  # 1表示切换到webview
-                #     print("切换到webview失败，请确定是否在webview页面")
-                #     return {"result": False, "webview": False}
-                # elif mOperate.get("is_webview", "0") == 2:
-                #     self.switchToNative()
-                if mOperate.get("element_info", "0") == "0":  # 如果没有页面元素，就不检测是页面元素，可能是滑动等操作
+                if mOperate.get("is_webview", "0") == 1 and self.switchToWebview() is False:  # 1表示切换到webview
+                    print("切换到webview失败，请确定是否在webview页面")
+                    return {"result": False, "webview": False}
+                elif mOperate.get("is_webview", "0") == 2:
+                    self.switchToNative()
+                if mOperate.get("element_info", "0") == 0:  # 如果没有页面元素，就不检测是页面元素，可能是滑动等操作
                     return {"result": True}
                 t = mOperate["check_time"] if mOperate.get("check_time", "0") != "0" else be.WAIT_TIME  # 如果自定义检测时间为空，就用默认的检测等待时间
                 WebDriverWait(self.driver, t).until(lambda x: self.elements_by(mOperate))  # 操作元素是否存在
@@ -56,32 +55,32 @@ class OperateElement:
             # print("WebDriver出现问题了")
             return {"result": False, "type": be.WEB_DROVER_EXCEPTION}
 
-    '''
-    查找元素.mOperate是字典
-    operate_type：对应的操作
-    element_info：元素详情
-    find_type: find类型
-    testInfo: 用例介绍
-    logTest: 记录日志
-    device: 设备名
-    '''
 
     def operate(self, mOperate, testInfo, logTest, device):
+        '''
+          查找元素.mOperate是字典
+          operate_type：对应的操作
+          element_info：元素详情
+          find_type: find类型
+          testInfo: 用例介绍
+          logTest: 记录日志
+          device: 设备名
+          '''
         res = self.findElement(mOperate)
         if res["result"]:
             return self.operate_by(mOperate, testInfo, logTest, device)
         else:
             return res
 
-    def operate_by(self, operate, testInfo, logTest, device):
+    def operate_by(self, operate, testInfo, logTest, device, x=471, y=1836):
         try:
-            info = operate.get("element_info", " ") + "_" + operate.get("operate_type", " ") + str(operate.get(
-                "code", " ")) + operate.get("msg", " ")
-            logTest.buildStartLine(testInfo[0]["id"] + "_" + testInfo[0]["title"] + "_" + info)  # 记录日志
+            info = str(operate.get("element_info", " ")) + "_" + operate.get("operate_type", " ") + str(operate.get(
+                "code", " ")) + str(operate.get("msg", " "))
+            logTest.buildStartLine(testInfo[0]["id"] + "==" + testInfo[0]["title"] + "==" + info)  # 记录日志
             print("==操作步骤：%s==" % info)
 
-            # if operate.get("operate_type", "0") == "0":  # 如果没有此字段，说明没有相应操作，一般是检查点，直接判定为成功
-            #     return {"result": True}
+            if operate.get("operate_type", "0") == 0:  # 如果没有此字段，说明没有相应操作，一般是检查点，直接判定为成功
+                return {"result": True}
 
             # threading._start_new_thread(self.click_windows(device),())
             elements = {
@@ -92,8 +91,8 @@ class OperateElement:
                 be.CLICK: lambda: self.click(operate),
                 be.IGNORE: lambda: self.ignore(operate),
                 be.REPEAT: lambda: self.repeat(operate),
-                be.SCREEN_TAP:lambda: self.screen_tap(200,200),
-                # be.GET_VALUE: lambda: self.get_value(operate),
+                be.SCREEN_TAP: lambda: self.screen_tap(x, y),
+                be.GET_VALUE: lambda: self.get_value(operate),
                 be.SET_VALUE: lambda: self.set_value(operate),
                 be.ADB_TAP: lambda: self.adb_tap(operate, device),
                 be.GET_CONTENT_DESC: lambda: self.get_content_desc(operate),
@@ -103,7 +102,7 @@ class OperateElement:
         except IndexError:
             logTest.buildStartLine(
                 testInfo[0]["id"] + "_" + testInfo[0]["title"] + "_" + operate["element_info"] + "索引错误")  # 记录日志
-            # print(operate["element_info"] + "索引错误")
+            print(operate["element_info"] + "索引错误")
             return {"result": False, "type": be.INDEX_ERROR}
         except NoSuchElementException:
             logTest.buildStartLine(
@@ -364,9 +363,10 @@ class OperateElement:
         :param y: 纵坐标 eg.200
         :return:
         '''
-        print('点击屏幕消除弹窗控件')
+        print('通过坐标点击')
         actions = TouchAction(self.driver)
         actions.tap(None, x, y).release().perform()
+        return {"result": True}
 
     def set_value(self, mOperate):
         """
@@ -378,30 +378,30 @@ class OperateElement:
         self.elements_by(mOperate).send_keys(mOperate["msg"])
         return {"result": True}
 
-    # def get_value(self, mOperate):
-    #     '''
-    #     读取element的值,支持webview下获取值
-    #     :param mOperate:
-    #     :return:
-    #     '''
-    #
-    #     if mOperate.get("find_type") == be.find_elements_by_id:
-    #         element_info = self.elements_by(mOperate)[mOperate["index"]]
-    #         if mOperate.get("is_webview", "0") == 1:
-    #             result = element_info.text
-    #         else:
-    #             result = element_info.get_attribute("text")
-    #         re_reulst = re.findall(r'[a-zA-Z\d+\u4e00-\u9fa5]', result)  # 只匹配中文，大小写，字母
-    #         return {"result": True, "text": "".join(re_reulst)}
-    #
-    #     element_info = self.elements_by(mOperate)
-    #     if mOperate.get("is_webview", "0") == 1:
-    #         result = element_info.text
-    #     else:
-    #         result = element_info.get_attribute("text")
-    #
-    #     re_reulst = re.findall(r'[a-zA-Z\d+\u4e00-\u9fa5]', result)
-    #     return {"result": True, "text": "".join(re_reulst)}
+    def get_value(self, mOperate):
+        '''
+        读取element的值,支持webview下获取值
+        :param mOperate:
+        :return:
+        '''
+
+        if mOperate.get("find_type") == be.find_elements_by_id:
+            element_info = self.elements_by(mOperate)[mOperate["index"]]
+            if mOperate.get("is_webview", "0") == 1:
+                result = element_info.text
+            else:
+                result = element_info.get_attribute("text")
+            re_reulst = re.findall(r'[a-zA-Z\d+\u4e00-\u9fa5]', result)  # 只匹配中文，大小写，字母
+            return {"result": True, "text": "".join(re_reulst)}
+
+        element_info = self.elements_by(mOperate)
+        if mOperate.get("is_webview", "0") == 1:
+            result = element_info.text
+        else:
+            result = element_info.get_attribute("text")
+
+        re_reulst = re.findall(r'[a-zA-Z\d+\u4e00-\u9fa5]', result)
+        return {"result": True, "text": "".join(re_reulst)}
 
     # 封装常用的标签
     def elements_by(self, mOperate):
@@ -425,4 +425,4 @@ class OperateElement:
             be.find_element_by_android_uiautomator: lambda: self.driver.find_element_by_android_uiautomator(
                 mOperate["element_info"])
         }
-        return elements[mOperate["find_type"]]
+        return elements[mOperate["find_type"]]()

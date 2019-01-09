@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 import sys
 
+
+
 sys.path.append("..")
 import platform
 from Base.BaseAndroidPhone import *
 from Base.BaseAdb import *
 from Base.BaseRunner import ParametrizedTestCase
-from TestCase.aheadTest import PrivacySet
-from TestCase.galleryTest import GalleryTest
-from TestCase.settingsTest import SetttingsTest
+from TestCase.Android.test_ahead import AheadTest
+from TestCase.Android.test_galley import GalleryTest
+from TestCase.Android.test_settings import SettingsTest
+from TestCase.Android.test_login import LoginTest
 from Base.BaseAppiumServer import AppiumServer
 from multiprocessing import Pool
 import unittest
@@ -46,7 +49,7 @@ def runnerPool(getDevices):
         _initApp["platformVersion"] = getPhoneInfo(devices=_initApp["deviceName"])["release"]
         _initApp["platformName"] = "android"
         _initApp["port"] = getDevices[i]["port"]
-        _initApp["automationName"] = "uiautomator2"
+        # _initApp["automationName"] = "uiautomator2"   //关闭automation
         _initApp["systemPort"] = getDevices[i]["systemPort"]
         _initApp["app"] = getDevices[i]["app"]
         apkInfo = ApkInfo(_initApp["app"])
@@ -64,10 +67,11 @@ def runnerPool(getDevices):
 def runnerCaseApp(devices):
     starttime = datetime.now()
     suite = unittest.TestSuite()
-    suite.addTest(ParametrizedTestCase.parametrize(PrivacySet, param=devices))#加入测试类
+    # suite.addTest(ParametrizedTestCase.parametrize(PrivacySet, param=devices))#加入测试类
     # suite.addTest(ParametrizedTestCase.parametrize(GalleryTest, param=devices))
-    suite.addTest(ParametrizedTestCase.parametrize(SetttingsTest, param=devices))
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    # suite.addTest(ParametrizedTestCase.parametrize(SettingsTest, param=devices))
+    suite.addTest(ParametrizedTestCase.parametrize(LoginTest, param=devices)) #加入测试类
+    unittest.TextTestRunner(verbosity=0).run(suite)
     endtime = datetime.now()
     countDate(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), str((endtime - starttime).seconds) + "秒")
 
@@ -83,11 +87,12 @@ if __name__ == '__main__':
         for dev in devicess:
             app = {}
             app["devices"] = dev
-            init(dev)
+            # init(dev)
             app["port"] = str(random.randint(4700, 4900))
             app["bport"] = str(random.randint(4700, 4900))
             app["systemPort"] = str(random.randint(4700, 4900))
-            app["app"] = BaseInit.apkPath
+            app["app"] = PATH("../app/NewHealthApp_201901041724_test_v2.8.0.apk")
+            # app["app"] = BaseInit.apkPath
             l_devices.append(app)
 
         appium_server = AppiumServer(l_devices)
@@ -97,7 +102,7 @@ if __name__ == '__main__':
         appium_server.stop_server(l_devices)
 
         #删除temp文件
-        remove_file(PATH("../yamls/temp.yaml"))
+        # remove_file(PATH("../yamls/temp.yaml"))
 
         # #log路径及解析
         # path = PATH("../Log/CrashInfo/Android/")

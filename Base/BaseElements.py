@@ -31,14 +31,11 @@ class Element(object):
     SWIPE_UP = "swipe_up"
     SWIPE_LEFT = "swipe_left"
     SWIPE_RIGHT = "swipe_right"
-
-
     SCREEN_TAP = 'screen_tap'
     SET_VALUE = "set_value"
     GET_VALUE = "get_value"
-    WAIT_TIME = 10
+    WAIT_TIME = 500
     PRESS_KEY_CODE = "press_keycode"
-
     GET_CONTENT_DESC = "get_content_desc"
 
     # 错误日志

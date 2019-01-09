@@ -1,0 +1,67 @@
+testinfo:
+    - id: test_login_001
+      title: 登录APP
+      info: 登录APP测试
+testcase:
+    - element_info: $null
+      find_type: $null
+      operate_type: screen_tap
+      is_time: 3
+      info: 点击健康模块
+
+    - element_info: $my
+      find_type: $id
+      operate_type: adb_tap
+      is_time: 5
+      info: 点击我的模块
+
+    - element_info: $reg_logi
+      find_type: $id
+      operate_type: adb_tap
+      is_time: 5
+      info: 点击注册\登录按钮按钮
+
+    - element_info: $phone
+      find_type: $id
+      operate_type: set_value
+      msg: 13828498727
+      is_time: 3
+      info: 输入手机号
+
+    - element_info: $pwd
+      find_type: $id
+      operate_type: set_value
+      msg: cyj123456
+      is_time: 3
+      info: 输入密码
+
+    - element_info: $login_btn
+      find_type: $id
+      operate_type: adb_tap
+      is_time: 3
+      info: 点击登录按钮
+
+    - element_info: $setting
+      find_type: $id
+      operate_type: adb_tap
+      is_time: 3
+      info: 点击设置按钮
+
+    - element_info: $exit_btn
+      find_type: $id
+      operate_type: adb_tap
+      is_time: 3
+      info: 点击退出登录按钮
+
+    - element_info: $exit_sure_btn
+      find_type: $id
+      operate_type: adb_tap
+      is_time: 3
+      info: 点击确认按钮
+
+
+check:
+    - element_info: 0
+      find_type: 0
+      operate_type: 0
+      info: 验证是否登录成功

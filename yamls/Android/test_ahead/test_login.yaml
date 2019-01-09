@@ -1,9 +1,9 @@
-testinfo:
-    - id: test_home_001
-      title: 登录测试
-      info: 登录测试验证
-testcase:
-    - element_info: $text_alert
+testinfo: #用例介绍
+    - id: test_home_001  #用例id
+      title: 登录测试  #用例标题
+      info: 登录测试验证 #前置条件
+testcase: #用例的执行步骤
+    - element_info: $text_alert #元素
       find_type: $text
       operate_type: click
       info: 授权存储

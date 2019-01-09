@@ -22,8 +22,6 @@ driver
 testinfo
 
 '''
-
-
 def countInfo(**kwargs):
     _info = {}
     step = ""  # 操作步骤信息
@@ -131,8 +129,6 @@ def countDate(testDate, testSumDate):
 '''
 测试报告
 '''
-
-
 def writeExcel():
     workbook = xlsxwriter.Workbook(PATH('../Report/' + Element.REPORT_FILE))
     worksheet = workbook.add_worksheet("测试总况")

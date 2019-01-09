@@ -20,20 +20,24 @@ def ReplaceYaml(yaml, newyaml, el_lists):
 
     for item in tc_list:
         if '$' in item['element_info']:
-            tc_key.append(item['element_info'])
+            # tc_key.append(item['element_info'])
+            tc_key.append(str(item['element_info']))
 
         if '$' in item['find_type']:
-            tc_type_key.append(item['find_type'])
+            # tc_type_key.append(item['find_type'])
+            tc_type_key.append(str(item['find_type']))
 
     for item in tc_check:
         if '$' in item['element_info']:
-            check_key.append(item['element_info'])
+            # check_key.append(item['element_info'])
+            check_key.append(str(item['element_info']))
 
         if '$' in item['find_type']:
-            check_type_key.append(item['find_type'])
+            # check_type_key.append(item['find_type'])
+            check_type_key.append(str(item['find_type']))
 
     with open(yaml, 'r', encoding='utf-8') as yml_file:
-        with open(newyaml, 'wt') as yml_output:
+        with open(newyaml, 'wt', encoding='utf-8') as yml_output:
             yml_file_lines = yml_file.readlines()
             for line in yml_file_lines:
                 if '$' in line:
@@ -77,9 +81,11 @@ def ReplaceYaml(yaml, newyaml, el_lists):
 
 
 if __name__ == "__main__":
-    yaml = PATH("../yamls/test_home/secondOpen.yaml")
-    newyaml = PATH("../yamls/test_home/new.yaml")
-    el_lists = PATH("../yamls/el_android.yaml")
-
-    ReplaceYaml(yaml, newyaml, el_lists)
+    pass
+    # yaml = PATH("../yamls/Android/test_settings/test_settings_feedback.yaml")
+    yaml = PATH("../yamls/Android/test_login/test_login.yaml")
+    tc_temp = PATH("../yamls/temp.yaml")
+    el_android = PATH("../yamls/xky_android.yaml")
+    ReplaceYaml(yaml, tc_temp, el_android)
+    print(getYam(tc_temp))
 

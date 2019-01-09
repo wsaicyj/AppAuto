@@ -10,7 +10,7 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-apkPath = PATH("../app/VivaVideo_7.3.6.apk")  # 测试的app路径
+apkPath = PATH("../app/NewHealthApp_201901041724_test_v2.8.0.apk")  # 测试的app路径
 ipaPath = PATH("../app/xiaoying.ipa")  # 测试的app路径
 
 def mk_file(platform):
@@ -57,5 +57,11 @@ def destroy():
 
 
 if __name__ == '__main__':
-    print(destroy())
+    pass
+    # print(destroy())
+    # PATH = lambda p: os.path.abspath(
+    #     os.path.join(os.path.dirname(__file__), p)
+    # )
+    # print(PATH("../yamls/Android/test_settings/test_settings_feedback.yaml"))
     # print(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+

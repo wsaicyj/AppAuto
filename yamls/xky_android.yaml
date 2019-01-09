@@ -1,0 +1,37 @@
+#控件获取方法
+$id: id
+$ids: ids
+$class_name: class_name
+$class_names: class_names
+$text: text
+$texts: texts
+$index: index
+$xpaths: xpaths
+$xpath: xpath
+$null: "0"
+
+#首页模块
+$yiuyi: com.xky.app.patient:id/navigation_appoRegi
+$health: com.xky.app.patient:id/navigation_health
+$bianmin: com.xky.app.patient:id/navigation_peopleService
+$my: com.xky.app.patient:id/navigation_personalCenter
+$my_text: text("我的")
+
+
+
+#登录界面
+$reg_logi: com.xky.app.patient:id/tv_register_or_login
+$phone: com.xky.app.patient:id/et_phone_number
+$pwd: com.xky.app.patient:id/et_pwd
+$login_btn: com.xky.app.patient:id/tv_login_btn
+$setting: com.xky.app.patient:id/iv_system_setting_up_menu
+
+
+#登录成功后界面
+$user_name: com.xky.app.patient:id/tv_user_name
+
+
+
+#设置界面
+$exit_btn: com.xky.app.patient:id/rl_exit_login
+$exit_sure_btn: com.xky.app.patient:id/mTv_positive_text

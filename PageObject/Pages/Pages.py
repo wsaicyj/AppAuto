@@ -21,8 +21,8 @@ class PagesObjects:
 
     def __init__(self, kwargs):
         self.driver = kwargs["driver"]
-        if kwargs.get("launch_app", "0") == "0":  # 若为空，重新打开app
-            self.driver.launch_app()
+        # if kwargs.get("launch_app", "0") == "0":  # 若为空，重新打开app
+        #     self.driver.launch_app()
         # self.path = kwargs["path"]
         self.operateElement = OperateElement(self.driver)
         self.isOperate = True
@@ -41,13 +41,17 @@ class PagesObjects:
     '''
      操作步骤
     '''
-
     def operate(self):
         if self.test_msg[0] is False: # 如果用例编写错误
             self.isOperate = False
             return False
         for item in self.testCase:
             m_s_g = self.msg + "\n" if self.msg != "" else ""
+
+            if item.get("is_time", "0") != "0":
+                time.sleep(item["is_time"])  # 等待时间
+                print("等待" + str(item["is_time"]) + "秒后再执行", )
+
             result = self.operateElement.operate(item, self.testInfo, self.logTest, self.device)
             if not result["result"]:
                 msg = "执行失败，请检查该元素是否存在:" + item["element_info"] + "," + result.get("text", " ")
@@ -58,10 +62,6 @@ class PagesObjects:
                 self.testInfo[0]["msg"] = msg
                 self.isOperate = False
                 return False
-
-            if item.get("is_time", "0") != "0":
-                time.sleep(item["is_time"])  # 等待时间
-                print("等待"+ item["is_time"] + "秒后再执行", )
 
             if item.get("operate_type", "0") == be.GET_VALUE or item.get("operate_type", "0") == be.GET_CONTENT_DESC:
                 self.get_value.append(result["text"])
@@ -100,7 +100,6 @@ class PagesObjects:
     contrary_getval: 相反值检查点，如果对比成功，说明失败
     check_point: 自定义检查结果    
     '''
-
     def check(self, kwargs):
         result = True
         m_s_g = self.msg + "\n" if self.msg != "" else ""

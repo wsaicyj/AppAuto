@@ -33,7 +33,7 @@ $lang_English: Language already selected
 $lang_back: com.quvideo.xiaoying:id/choose_language_back
 
 #隐私权限
-$privacy_set: text("私信权限")
+#$privacy_set: text("私信权限")
 $focus_me: text("我关注的人")
 $block_list: text("黑名单")
 $block_remove: text("移除")
@@ -85,6 +85,7 @@ $video_play: com.quvideo.xiaoying:id/video_editor_seek_play
 $tab_center: com.quvideo.xiaoying:id/img_creation
 $privacy_set: com.quvideo.xiaoying:id/img_studio
 $tab_plant: com.quvideo.xiaoying:id/img_find
+$tab_personal: com.quvideo.xiaoying:id/layout_fragment_studio
 
 #首页功能位
 $home_edit: com.quvideo.xiaoying:id/icon1
@@ -206,7 +207,7 @@ $fil_detail_download: text("免费下载")
 $fil_mgr: com.quvideo.xiaoying:id/right_mgr
 $fil_del: com.quvideo.xiaoying:id/img_delete
 $fil_temp_use: com.quvideo.xiaoying:id/template_filter_apply
-$fil_detail_download: text("免费下载")
+#$fil_detail_download: text("免费下载")
 $fil_detail_back: com.quvideo.xiaoying:id/template_datail_back
 $fil_par_cover: com.quvideo.xiaoying:id/item_fitler_parent_cover
 $fil_chil_cover: com.quvideo.xiaoying:id/item_fitler_child_cover
@@ -249,7 +250,7 @@ $text_tab_comm: //*/android.widget.LinearLayout/android.widget.RelativeLayout[2]
 $text_tab_font: //*/android.widget.LinearLayout/android.widget.RelativeLayout[3]/android.widget.ImageView
 $text_tab_color: //*/android.widget.LinearLayout/android.widget.RelativeLayout[4]/android.widget.ImageView
 $text_tab_set: //*/android.widget.LinearLayout/android.widget.RelativeLayout[5]/android.widget.ImageView
-$text_def_cho: //*/android.support.v7.widget.RecyclerView[2]/*/android.widget.RelativeLayout/*/android.widget.ImageView
+#$text_def_cho: //*/android.support.v7.widget.RecyclerView[2]/*/android.widget.RelativeLayout/*/android.widget.ImageView
 $text_font_download: com.quvideo.xiaoying:id/iv_font_download_flag
 $text_def_cho: com.quvideo.xiaoying:id/div_roll_thumb
 $text_undo: com.quvideo.xiaoying:id/iv_subtitle_op_left_btn
@@ -375,8 +376,8 @@ $temp_stick_download: com.quvideo.xiaoying:id/template_pack_download_progress
 $temp_stick_del: com.quvideo.xiaoying:id/img_delete
 
 #素材中心-动画贴纸
-$temp_stick_download: com.quvideo.xiaoying:id/template_pack_download_progress
-$temp_stick_del: com.quvideo.xiaoying:id/img_delete
+#$temp_stick_download: com.quvideo.xiaoying:id/template_pack_download_progress
+#$temp_stick_del: com.quvideo.xiaoying:id/img_delete
 $temp_gif: com.quvideo.xiaoying:id/right_button
 $temp_gif_search: com.quvideo.xiaoying:id/edittext_search
 
@@ -386,7 +387,7 @@ $temp_tran_del: com.quvideo.xiaoying:id/template_caption_grid_btn_update
 
 #素材中心-字体
 $temp_stick_downloa: com.quvideo.xiaoying:id/btn_download
-$temp_stick_del: com.quvideo.xiaoying:id/img_delete
+#$temp_stick_del: com.quvideo.xiaoying:id/img_delete
 
 
 

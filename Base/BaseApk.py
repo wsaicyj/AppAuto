@@ -10,13 +10,20 @@ class ApkInfo():
     def __init__(self, apkPath):
         self.apkPath = apkPath
 
-# 得到app的文件大小
     def getApkSize(self):
+        '''
+        得到app的文件大小
+        :return:
+        '''
         size = floor(os.path.getsize(self.apkPath) / (1024 * 1000))
         return str(size) + "M"
 
 
     def getApkBaseInfo(self):
+        '''
+        获取应用基本信息
+        :return:
+        '''
         p = subprocess.Popen("aapt dump badging %s" % self.apkPath, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              stdin=subprocess.PIPE, shell=True)
@@ -34,46 +41,63 @@ class ApkInfo():
         print('appVersion:', appVersion)
         return packagename, appKey, appVersion
 
-    #得到启动类
-
     def getApkActivity(self):
+        '''
+        获取启动类名称
+        :return:
+        '''
         p = subprocess.Popen("aapt dump badging %s" % self.apkPath, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              stdin=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
-        # print("=====getApkActivity=========")
+        print("=====getApkActivity=========")
         match = re.compile("launchable-activity: name=(\S+)").search(output.decode())
         # print("match=%s" %match)
         if match is not None:
             # print('launchable-activity:', match.group(1))
             return match.group(1)
 
-    # 得到应用名字
     def getApkName(self):
-        cmd = "aapt dump badging " + self.apkPath + " | grep application-label: "
-        result = ""
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+        '''
+        获取应用名称
+        :return:
+        '''
+        p = subprocess.Popen("aapt dump badging %s" % self.apkPath, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              stdin=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
-        # print(output)
-        if output != "":
-            # print(output)
-            result = output.split()[0].decode()[19:-1]
-        return result
+        t = output.decode().split()
+        for item in t:
+            # print(item)
+            match = re.compile("application-label-zh:(\S+)").search(item)
+            if match is not None:
+                return match.group(1)
+
+    # 得到应用名字
+    # def getApkName(self):
+    #     cmd = "aapt dump badging " + self.apkPath + " | grep application-label: "
+    #     result = ""
+    #     p = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+    #                          stderr=subprocess.PIPE,
+    #                          stdin=subprocess.PIPE, shell=True)
+    #     (output, err) = p.communicate()
+    #     # print(output)
+    #     if output != "":
+    #         # print(output)
+    #         result = output.split()[0].decode()[19:-1]
+    #     return result
 
 if __name__ == '__main__':
     pass
-    apkPath = '../app/VivaVideo_7.3.1.apk'
-    litePath = '/Users/zhulixin/Downloads/XiaoYing_lite.apk'
-
-    info = ApkInfo(apkPath)
-    apk = info.getApkBaseInfo()
-    size = info.getApkSize()
-    activity = info.getApkActivity()
-    appname = info.getApkName()
-
-    print('appName:', appname)
-    print('size:', size)
-    print('launchActivity:', activity)
+    # apkPath = '../app/NewHealthApp_201901041724_test_v2.8.0.apk'
+    #
+    # info = ApkInfo(apkPath)
+    # apk = info.getApkBaseInfo()
+    # size = info.getApkSize()
+    # activity = info.getApkActivity()
+    # appname = info.getApkName()
+    #
+    # print('appName:', appname)
+    # print('size:', size)
+    # print('launchActivity:', activity)
 
